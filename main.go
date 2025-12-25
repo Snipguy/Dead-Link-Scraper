@@ -135,6 +135,10 @@ func main() {
 				continue
 			}
 
+			if visited[absURL.String()] {
+				continue
+			}
+
 			if isDeadLink(absURL.String()) {
 				fmt.Println(absURL.String(), "❌")
 				fmt.Printf("-------------------------\n")
@@ -144,8 +148,7 @@ func main() {
 				fmt.Printf("-------------------------\n")
 				counter = counter + 1
 			}
-
-			if absURL.Host == baseURL.Host && !visited[absURL.String()] {
+			if absURL.Host == baseURL.Host {
 				queue = append(queue, absURL.String())
 			}
 		}
