@@ -10,8 +10,6 @@ import (
 	"golang.org/x/net/html"
 )
 
-// const starting_site string = "https://scrape-me.dreamsofcode.io/"
-
 const starting_site string = "https://crawler-test.com/"
 
 func isDeadLink(url string) bool {
@@ -61,42 +59,18 @@ func getLinks(body io.Reader) []string {
 }
 
 func main() {
-	// reader := bufio.NewReader(os.Stdin)
-	// starting_site, _ := reader.ReadString('\n')
-
+	
 	fmt.Printf("------start------\n")
 	resp, err := http.Get(starting_site)
 	if err != nil {
 		fmt.Printf("error at fetching the starting site : %v", err)
 		fmt.Printf("-------------------------\n")
+		return
 	}
 
 	defer resp.Body.Close()
 
-	// Links := getLinks(resp.Body)
-	// var internal_links []string
-	// var external_links []string
-
-	// for _, link := range Links {
-	// 	if strings.Contains(link, starting_site) || strings.HasPrefix(link, "/") {
-	// 		internal_links = append(internal_links, link)
-	// 		for _, link := range internal_links {
-	// 			if isDeadLink(link) {
-	// 				fmt.Printf("%v ----> %v\n", link, "❌")
-	// 				fmt.Printf("-------------gg------------\n")
-	// 			} else {
-	// 				fmt.Printf("%v ----> %v\n", link, "✔")
-	// 				fmt.Printf("-------------------------\n")
-	// 				Links = append(Links, link)
-	// 			}
-	// 		}
-	// 	} else {
-	// 		external_links = append(external_links, link)
-	// 	}
-	// }
-
-	// starting_site := "https://scrape-me.dreamsofcode.io/"
-
+	
 	visited := make(map[string]bool)
 	queue := []string{starting_site}
 
@@ -153,18 +127,6 @@ func main() {
 			}
 		}
 	}
-
-	// for _, link := range external_links {
-	// 	status := isDeadLink(link)
-
-	// 	if status {
-	// 		fmt.Printf("%v ----> %v\n", link, "✔")
-	// 		fmt.Printf("-------------------------\n")
-	// 	} else {
-	// 		fmt.Printf("%v ----> %v\n", link, "❌")
-	// 		fmt.Printf("-------------------------\n")
-	// 	}
-	// }
 
 	fmt.Printf("all links = %v", counter)
 	fmt.Printf("------end------")
